@@ -1,10 +1,10 @@
 # Molecular simulation source programs
 
-Source programs for preparing molecular inputs, submitting GROMACS viscosity simulations and analysing their outputs. The package contains the programs that generate the per-loading and per-acceleration jobs, their shared Python/Bash dependencies, and the small molecular inputs for directory 21 (EEMPA).
+Workflow programs for preparing molecular inputs, running GROMACS viscosity simulations and analysing their outputs. The package contains the programs that generate the per-loading and per-acceleration jobs, their shared Python/Bash dependencies, and the small molecular inputs for directory 21 (EEMPA).
 
 ## Download and inspect
 
-Download [simulation-source-programs-20261028.zip](simulation-source-programs-20261028.zip) and extract it. `SOURCE_INDEX.csv` identifies each original source file and its role; `SOURCE_MANIFEST.json` records its SHA-256. Original source programs are preserved without numerical or algorithmic edits. The four entry scripts shown alongside this guide are reading copies; use the archive to obtain the complete directory structure.
+Download [Simulation_Workflow_and_Example_Inputs.zip](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/download/data-20261103-v2/Simulation_Workflow_and_Example_Inputs.zip) and extract it. `SOURCE_INDEX.csv` identifies each original source file and its role; `SOURCE_MANIFEST.json` records its SHA-256. Original source programs are preserved without numerical or algorithmic edits. The four entry scripts shown alongside this guide are reading copies; use the archive to obtain the complete directory structure.
 
 The generated `packmol_*.slurm`, `gromacs_*.slurm`, `submit_*.sh`, per-loading MDP files and other job instances are intentionally absent: their parent programs generate them. Trajectories, restart files, energy binaries, rendered images and large coordinate files are also absent.
 
@@ -34,7 +34,7 @@ flowchart TD
 | `Viscosity_cal/21/process_rdf*.slurm` | Separate RDF and coordination analysis entries; plotting helpers are supplied in their referenced subdirectories. |
 | `reference_charges/` | Small saved RESP charge files, supplied as reference inputs rather than silently used to skip a new charge calculation. |
 
-The shared library and directory 21 are **distinct versions**. Directory 21 uses six fixed acceleration amplitudes, 0.025–0.050 nm ps−2. The shared library contains an adaptive regression loop and currently starts with nine amplitudes, 0.005–0.045 nm ps−2. The older HTML overview describes another configuration and is not an authoritative parameter record. `variants/gromacs_viscosity_from_run_directory.sh` preserves the distinct run-directory copy; its energy-menu parsing and job-ID handling differ from the top-level directory-21 copy.
+The shared library and directory 21 are **distinct versions**. Directory 21 uses six fixed acceleration amplitudes, 0.025–0.050 nm ps−2. The shared library contains an adaptive regression loop and currently starts with nine amplitudes, 0.005–0.045 nm ps−2. `variants/gromacs_viscosity_from_run_directory.sh` preserves the distinct run-directory copy; its energy-menu parsing and job-ID handling differ from the top-level directory-21 copy.
 
 ## Prepare a working copy
 
@@ -69,6 +69,6 @@ The original velocity-profile postprocessing removes the NEMD trajectory after g
 
 The energy helper extracts inverse viscosity over 200–450 ps of the 500 ps production run. Velocity-profile visualization uses 350–450 ps. These are separate operations. The directory-21 regression is performed against acceleration itself; the legacy uncertainty expression is not the conditional intercept standard error used in the current numerical release.
 
-For the reported numerical estimates and their adopted uncertainty definitions, use the repository's [versioned numerical data and analysis](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/tag/data-20261103-final). Do not substitute the legacy regression uncertainty, default free-volume analysis or another molecular model for the adopted analyses.
+For the reported numerical estimates and their adopted uncertainty definitions, use the repository's [versioned numerical data and analysis](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/tag/data-20261103-v2). Do not substitute the legacy regression uncertainty, default free-volume analysis or another molecular model for the adopted analyses.
 
 `VALIDATION.json` reports source syntax and isolated job-generation checks. These checks demonstrate that the source dependencies are supplied and the main entry generates its jobs; they do not establish complete MD reproducibility or bitwise-identical trajectories.
