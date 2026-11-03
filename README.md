@@ -1,62 +1,44 @@
 # Viscosity of water-lean CO2 absorbents
 
-Numerical data and analysis code for a study of viscosity, aggregate composition, molecular motion and fractional free volume in single-component, water-lean CO2 absorbents.
+Data and simulation code for *Comparative Insights into Viscosity in Single-Component Water-Lean CO2 Absorbents*.
 
-## Simulation source programs
+## Start here
 
-The [simulation source guide](simulation/README.md) provides the original workflow generators, their shared dependencies and molecular input example, from SMILES/RESP preparation through GROMACS and postprocessing. Generated per-loading job instances are excluded because the source programs create them.
+Use the **[3 November 2026 data and code release](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/tag/data-20261103-v2)** for the current manuscript sources.
 
-## Download
+| Download | Contents |
+|---|---|
+| [START_HERE.txt](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/download/data-20261103-v2/START_HERE.txt) | Guide to the two packages and their scope. |
+| [Source_Data_and_Analysis.zip](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/download/data-20261103-v2/Source_Data_and_Analysis.zip) | Numerical results, figure and table inputs, analysis programs and simulation parameters. |
+| [Simulation_Workflow_and_Example_Inputs.zip](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/download/data-20261103-v2/Simulation_Workflow_and_Example_Inputs.zip) | Molecular preparation, GROMACS viscosity workflows, shared helpers and EEMPA example inputs. |
+| [SHA256SUMS.txt](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/download/data-20261103-v2/SHA256SUMS.txt) | Checksums for both ZIP archives. |
+| [verification.json](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/download/data-20261103-v2/verification.json) | Summary of file-integrity and numerical checks. |
 
-Download **[viscosity-data-20261028-v2.zip](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/download/data-20261028-v2/viscosity-data-20261028-v2.zip)** from the [versioned data release](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/tag/data-20261028-v2). The archive includes the scripts below, numerical inputs, small simulation-parameter files and source indexes. Raw trajectories are not included.
+Download these named assets rather than GitHub's automatically generated Source code archives.
 
-## Run
+## Find and verify a numerical result
 
-Use Python 3.12. From the directory containing the downloaded ZIP:
+Extract `Source_Data_and_Analysis.zip`. Read its `README.txt` and `FIGURE_DATA_INDEX.csv` to locate the inputs for a manuscript figure or table. Use the index inside this archive rather than the older index files in the repository root.
+
+From the extracted directory, run:
 
 ```bash
-python -m zipfile -e viscosity-data-20261028-v2.zip data
-python data/reproduce.py --data data --output results
+python verify_archive.py
+python verify_results.py
 ```
 
-Numerical checks use only the Python standard library. To generate the selected plots, install the plotting dependencies in a virtual environment and run:
+These commands verify file integrity and selected numerical results; they do not rerun molecular dynamics. The experimental comparison contains 49 pairs and has a mean absolute log10 error of **0.136**. Full numerical precision is retained in the data for recalculation. Missing uncertainty values remain missing. Other analysis programs require the inputs, dependencies and path configuration documented in the package.
 
-```bash
-python -m pip install -r data/requirements.txt
-python data/reproduce.py --data data --output results --plots
-```
+## Use the simulation workflows
 
-The tested plotting versions are NumPy 2.3.5, pandas 3.0.1 and Matplotlib 3.11.2. The complete environment is listed in `environment.txt`.
+Extract `Simulation_Workflow_and_Example_Inputs.zip` and start with its `README.md`. The [online simulation guide](simulation/README.md) explains the program hierarchy, software dependencies, execution paths, scheduler settings and starting-state requirements. The shared-library and EEMPA example workflows have different settings; follow their documented variants. Generated per-loading jobs are produced by the supplied programs.
 
-## Outputs
+## Scope and raw trajectories
 
-`results/verification.json` records the checks and their exit codes. `results/plots/` contains seven figures in PNG and PDF: four numerical overviews, the selected Me3SiNHGly regressions, the acceleration-sensitivity comparison, and the 16-system cluster-size distributions. Overview plots reproduce the supplied numerical relationships, not the original publication layout or molecular illustrations.
+The packages provide data, analysis sources and simulation workflow examples. Complete starting inputs for all 16 systems are not included, and the packages are not a one-command reproduction of the entire paper. Raw trajectories are available from the corresponding authors upon reasonable request. Consult the data package documentation for remaining source limitations and the definitions of each analysis. Finite-window contact persistence should not be interpreted as a complete cluster lifetime.
 
-Expected results include 49 experimental-comparison pairs with a mean absolute log10 error of **0.1369936364**, 134 retained viscosity-loading inputs, and 144 free-volume conditions. Recalculation of the Si-free tBuNHDiGly series gives **9.490217 +/- 0.581163 cP** at loading 0.25.
+## Earlier versions
 
-## Find a result
-
-| Content | Input location in the archive | Runnable code |
-|---|---|---|
-| Viscosity comparisons and loading series | `numerical/data/`, `viscosity/current/` | `verify_numerical_inputs.py`, `plot_numerical_data.py` |
-| tBuNHDiGly viscosity extrapolation | `viscosity/tBu_corrected/` | `recalculate_tbu.py` |
-| High-loading viscosity extrapolation | `high_loading_viscosity.zip` | `recalculate_highloading.py` |
-| Cluster-size distributions | `SI/cluster_size/inputs/` | `plot_cluster_size.py` |
-| Aggregate composition and viscosity | `numerical/data/Figure3h_16systems.csv` | `plot_numerical_data.py` |
-| Molecular displacement and contact persistence | `motion_contact_data.zip` | `reproduce.py`, `plot_numerical_data.py` |
-| Fractional free volume | `FFV/current/` | `plot_numerical_data.py` |
-| Selected regression and acceleration comparisons | `SI/Me3SiNHGly_S15/`, `SI/compact/` | `plot_selected_regressions.py`, `plot_acceleration_comparison.py` |
-
-[SOURCE_INDEX.csv](SOURCE_INDEX.csv) gives figure/table-level locations. [CODE_INDEX.csv](CODE_INDEX.csv) lists runnable entry points. The numbering map identifies the 23 SI figures and 13 SI tables indexed in this data release; source filenames and complete supporting tables can retain earlier labels. `ARCHIVED_SOURCE_INDEX.csv` identifies data retained for transparency but no longer displayed as numbered SI items. The acceleration-sensitivity plot is supplementary diagnostic material.
-
-## Interpretation and scope
-
-The tBuNHDiGly estimates use the corrected Si-free model and the 200-450 ps interval of each 500 ps production run. Their uncertainties are conditional extrapolation-intercept standard errors. The two high-loading calculations use their separately documented 1000-2500 ps interval.
-
-Molecular-displacement and scattering curves use the original 1 ns NVT trajectories. Continuous-contact persistence uses a fixed absolute origin at 1 ns and observations to 10 ns. Its restricted 9 ns integral is not a complete cluster lifetime.
-
-The scripts verify supplied numerical data and selected calculations; they do not rerun all molecular dynamics simulations or reconstruct every figure from raw coordinates. Original trajectory-analysis scripts require additional inputs and path configuration. Raw trajectories are available from the corresponding author on reasonable request.
-
-[KNOWN_GAPS.json](KNOWN_GAPS.json) and [SOURCE_GAPS_BY_ITEM.csv](SOURCE_GAPS_BY_ITEM.csv) identify missing illustration/profile inputs, unverified experimental-density provenance, and three unresolved viscosity-centre differences. No unmatched uncertainty estimates are substituted. SHA256.json lists the checksums of the archive contents.
+[Previous releases](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases), including the 28 October data package and the preceding 3 November package, remain available for provenance. The scripts, numerical indexes, gap lists and checksums in the repository root belong to the **28 October 2026 version**. They are retained as historical files; the current download links and verification commands are those above. Earlier figure numbers and numerical summaries should not replace the current archive's figure-to-data mapping and results.
 
 Third-party attribution and applicable terms are retained. This deposit does not grant a new licence to third-party material.
