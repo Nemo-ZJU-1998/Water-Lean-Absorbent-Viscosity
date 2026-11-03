@@ -69,6 +69,6 @@ The original velocity-profile postprocessing removes the NEMD trajectory after g
 
 The energy helper extracts inverse viscosity over 200–450 ps of the 500 ps production run. Velocity-profile visualization uses 350–450 ps. These are separate operations. The directory-21 regression is performed against acceleration itself; the legacy uncertainty expression is not the conditional intercept standard error used in the current numerical release.
 
-For the reported numerical estimates and their adopted uncertainty definitions, use the repository's [versioned numerical data and analysis](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/tag/data-20261028-v2). Do not substitute the legacy regression uncertainty, default free-volume analysis or another molecular model for the adopted analyses.
+For the reported numerical estimates and their adopted uncertainty definitions, use the repository's [versioned numerical data and analysis](https://github.com/Nemo-ZJU-1998/Water-Lean-Absorbent-Viscosity/releases/tag/data-20261103-final). Do not substitute the legacy regression uncertainty, default free-volume analysis or another molecular model for the adopted analyses.
 
 `VALIDATION.json` reports source syntax and isolated job-generation checks. These checks demonstrate that the source dependencies are supplied and the main entry generates its jobs; they do not establish complete MD reproducibility or bitwise-identical trajectories.
